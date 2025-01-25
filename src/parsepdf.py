@@ -39,9 +39,15 @@ def list_pdfs(folder_path):
     pdf_files = [f for f in os.listdir(folder_path) if f.endswith('.pdf')]
     return pdf_files
 
-folder_path = 'C:\\fundev\\longmont_planning_bot\\data\\'  # Replace this with the path to your folder
-pdf_files = list_pdfs(folder_path)
+def convert_pdfs(folder):
+    pdf_files = list_pdfs(folder)
 
-for pdf in pdf_files:
-    df = spreadsheet_to_dataframe( os.path.join(folder_path, pdf) )
-    print(df)
+    for pdf in pdf_files:
+        pdf_path = os.path.join(folder_path, pdf)
+        df = spreadsheet_to_dataframe( os.path.join(folder_path, pdf) )
+        
+        df.to_json(pdf_path + '.json', index=False)
+        df.to_csv(pdf_path + '.csv',errors='replace',index = False)
+
+folder_path = 'C:\\fundev\\longmont_planning_bot\\data\\'  # Replace this with the path to your folder
+convert_pdfs(folder_path)
