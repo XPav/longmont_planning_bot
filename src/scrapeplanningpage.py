@@ -23,7 +23,6 @@ def download_pdf(url, link_text, folder):
                 # If the PDF link is relative, make it absolute
                 pdf_url = os.path.join(url, pdf_url)
             
-
             # Step 5: Download the PDF
             print(f"Downloading PDF from {pdf_url}...")
             pdf_response = requests.get(pdf_url)
@@ -34,14 +33,17 @@ def download_pdf(url, link_text, folder):
                 with open( dest , 'wb') as pdf_file:
                     pdf_file.write(pdf_response.content)
                 print(f"Downloaded PDF: {pdf_filename}")
+                return dest
             else:
                 print(f"Failed to download the PDF: {pdf_url}")
-            return
+                return None
     print(f"No link found containing text '{link_text}' that points to a PDF.")
 
 # Example usage
 webpage_url = 'https://longmontcolorado.gov/planning-and-development-services/plans-and-reports/active-development-log-and-map/' 
 text_to_search_for = 'Active Development Log'  
-download_pdf(webpage_url, text_to_search_for, '.\\data')
+dled = download_pdf(webpage_url, text_to_search_for, '.\\data')
+
+print( dled )
 
 
